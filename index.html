@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechSolved - Portal</title>
+    <style>
+        /* --- ESTILOS GERAIS (MANTIDOS DO ECYCLE) --- */
+        :root {
+            --cor-primaria: #2e7d32; 
+            --cor-secundaria: #e8f5e9;
+            --cor-fundo: #f4f7f6; 
+            --cor-texto: #333333; 
+            --cor-alerta: #d32f2f;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0; padding: 0;
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #ffffff;
+            border-top: 5px solid var(--cor-primaria);
+            padding: 30px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        header h1 {
+            color: var(--cor-primaria);
+            margin: 0 0 20px 0;
+            font-size: 2.5em;
+        }
+
+        nav ul {
+            list-style: none; padding: 0; margin: 0;
+            display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;
+        }
+        
+        nav a {
+            text-decoration: none; padding: 10px 25px;
+            background-color: #ffffff; color: var(--cor-primaria);
+            border: 2px solid var(--cor-primaria); border-radius: 30px; 
+            font-weight: bold; transition: all 0.3s ease;
+        }
+
+        nav a:hover, nav a.btn-ativo {
+            background-color: var(--cor-primaria); color: #ffffff;
+        }
+
+        main {
+            max-width: 900px; margin: 40px auto;
+            background-color: #ffffff; padding: 40px;
+            border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        h2 { color: var(--cor-primaria); border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 0; }
+        h3 { color: #555; font-size: 1.2em; }
+
+        .pagina { display: none; animation: fadeIn 0.5s ease; }
+        .pagina.ativa { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        footer { text-align: center; padding: 20px; margin-top: 40px; background-color: var(--cor-primaria); color: #ffffff; font-size: 0.9em; }
+
+        /* --- ESTILOS ESPECÍFICOS PARA OS CONTEÚDOS --- */
+        
+        /* Formulários (Visão Utilizador) */
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 5px; }
+        .form-group select, .form-group text-area, .form-group input {
+            width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-family: inherit;
+        }
+        .form-group textarea { height: 120px; resize: vertical; }
+        .dica-netiqueta { font-size: 0.85em; color: #666; background: #fff3cd; padding: 10px; border-left: 4px solid #ffc107; margin-bottom: 10px; }
+        .btn-submit { background-color: var(--cor-primaria); color: white; border: none; padding: 10px 20px; font-size: 1.1em; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .btn-submit:hover { background-color: #1b5e20; }
+
+        /* Tabelas (Visão Técnico) */
+        .tabela-dados { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .tabela-dados th, .tabela-dados td { border: 1px solid #ddd; padding: 12px; text-align: left; font-size: 0.95em; }
+        .tabela-dados th { background-color: var(--cor-secundaria); color: var(--cor-primaria); }
+        .status-aberto { color: var(--cor-alerta); font-weight: bold; }
+        .status-andamento { color: #f57c00; font-weight: bold; }
+
+        /* Dashboard (Visão Direção) */
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .kpi-card { background: #fff; border: 1px solid #eee; border-radius: 8px; padding: 20px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.02); border-top: 4px solid var(--cor-primaria); }
+        .kpi-valor { font-size: 2.5em; font-weight: bold; color: var(--cor-primaria); margin: 10px 0; }
+        .kpi-titulo { font-size: 0.9em; color: #666; text-transform: uppercase; letter-spacing: 1px; }
+        .grafico-simulado { background: var(--cor-fundo); padding: 20px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e0e0e0; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>TechSolved</h1>
+        <nav>
+            <ul>
+                <li><a href="#VU" class="btn-nav btn-ativo" data-target="VU">Visão do Utilizador</a></li>
+                <li><a href="#VT" class="btn-nav" data-target="VT">Visão do Técnico</a></li>
+                <li><a href="#VD" class="btn-nav" data-target="VD">Visão da Direção</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="VU" class="pagina ativa">
+            <h2>Abertura de Chamado</h2>
+            <p>Por favor, preencha os dados abaixo para relatar um erro. A categorização correta acelera o nosso tempo de resposta.</p>
+            
+            <form action="#" onsubmit="alert('Chamado aberto com sucesso!'); return false;">
+                <div class="form-group">
+                    <label for="sistema">1. Em qual Sistema o erro ocorreu?</label>
+                    <select id="sistema" required>
+                        <option value="">Selecione um sistema...</option>
+                        <option value="1">ERP Financeiro (Módulo Pagamentos)</option>
+                        <option value="2">CRM Vendas (Módulo Cadastros)</option>
+                        <option value="3">Portal RH (Módulo Ponto)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="tipoManutencao">2. Tipo de Manutenção Requerida:</label>
+                    <select id="tipoManutencao" required>
+                        <option value="">Selecione o tipo...</option>
+                        <option value="corretiva">Corretiva (O sistema parou/Apresenta erro grave)</option>
+                        <option value="preventiva">Preventiva (Lentidão/Verificação)</option>
+                        <option value="evolutiva">Evolutiva (Solicitação de nova funcionalidade)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="historico">3. Descrição do Erro (Histórico):</label>
+                    <div class="dica-netiqueta">
+                        <strong>Boas Práticas (Netiqueta):</strong> Evite descrições como "O sistema não funciona". Descreva o passo a passo que você fez até o erro acontecer, mensagens de erro exatas exibidas na tela e desde quando o problema ocorre.
+                    </div>
+                    <textarea id="historico" placeholder="Ex: Ao tentar gerar o relatório de vendas mensal hoje às 10h, a tela travou e exibiu o 'Erro 504 - Timeout'..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">Abrir Chamado</button>
+            </form>
+        </section>
+
+        <section id="VT" class="pagina">
+            <h2>Gestão de Tickets (Mesa do Técnico)</h2>
+            <p>Acompanhamento dos chamados atribuídos. Priorize os chamados abertos mais antigos.</p>
+            
+            <table class="tabela-dados">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Cliente</th>
+                        <th>Sistema / Módulo</th>
+                        <th>Histórico Resumido</th>
+                        <th>Status</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#1042</td>
+                        <td>Empresa XYZ Ltda</td>
+                        <td>ERP Financeiro (Mod: 02)</td>
+                        <td>Erro 504 ao emitir boleto...</td>
+                        <td class="status-aberto">Aberto</td>
+                        <td><a href="#" style="color:var(--cor-primaria)">Assumir / Resolver</a></td>
+                    </tr>
+                    <tr>
+                        <td>#1041</td>
+                        <td>Alpha Corp</td>
+                        <td>CRM Vendas (Mod: 05)</td>
+                        <td>Botão de salvar inativo.</td>
+                        <td class="status-andamento">Em Andamento</td>
+                        <td><a href="#" style="color:var(--cor-primaria)">Atualizar Ticket</a></td>
+                    </tr>
+                    <tr>
+                        <td>#1039</td>
+                        <td>TechLogistics</td>
+                        <td>Portal RH (Mod: 01)</td>
+                        <td>Lentidão ao fechar folha.</td>
+                        <td class="status-aberto">Aberto</td>
+                        <td><a href="#" style="color:var(--cor-primaria)">Assumir / Resolver</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="VD" class="pagina">
+            <h2>Dashboard de Gestão e Performance</h2>
+            <p>Visão executiva com base nos dados do banco (Indicadores e KPIs).</p>
+
+            <div class="dashboard-grid">
+                <div class="kpi-card">
+                    <div class="kpi-titulo">MTTR Global (Tempo Médio de Reparo)</div>
+                    <div class="kpi-valor">4.2h</div>
+                    <div style="font-size: 0.8em; color: green;">▼ -0.5h comparado ao mês anterior</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-titulo">MTBF (Tempo Médio Entre Falhas)</div>
+                    <div class="kpi-valor">128h</div>
+                    <div style="font-size: 0.8em; color: green;">▲ +12h comparado ao mês anterior</div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="grafico-simulado">
+                    <h3>Volume por Sistema (Query 4)</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 10px;">🔴 ERP Financeiro: <strong>45 falhas</strong></li>
+                        <li style="margin-bottom: 10px;">🟡 CRM Vendas: <strong>22 falhas</strong></li>
+                        <li>🟢 Portal RH: <strong>8 falhas</strong></li>
+                    </ul>
+                </div>
+
+                <div class="grafico-simulado">
+                    <h3>Top Resolutores (Query 5)</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 10px;">🥇 Carlos Dev: <strong>89 chamados</strong></li>
+                        <li style="margin-bottom: 10px;">🥈 Ana Silva: <strong>76 chamados</strong></li>
+                        <li>🥉 Pedro Tech: <strong>65 chamados</strong></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="grafico-simulado">
+                <h3>Resumo de Status Atual (Query 3)</h3>
+                <p><strong>Abertos:</strong> 15 | <strong>Em Andamento:</strong> 8 | <strong>Fechados:</strong> 245</p>
+            </div>
+
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 TechSolved. Todos os direitos reservados a Matheus.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const botoes = document.querySelectorAll('.btn-nav');
+            const paginas = document.querySelectorAll('.pagina');
+
+            botoes.forEach(botao => {
+                botao.addEventListener('click', function(evento) {
+                    evento.preventDefault(); 
+                    paginas.forEach(pagina => pagina.classList.remove('ativa'));
+                    botoes.forEach(b => b.classList.remove('btn-ativo'));
+                    
+                    const idAlvo = this.getAttribute('data-target');
+                    document.getElementById(idAlvo).classList.add('ativa');
+                    this.classList.add('btn-ativo');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
