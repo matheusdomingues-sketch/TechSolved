@@ -128,7 +128,7 @@
         .status-pill { padding: 4px 12px; border-radius: 20px; font-size: 0.8em; font-weight: bold; background: #e8f5e9; color: #2e7d32; }
 
         /* --- DASHBOARD (DIREÇÃO) --- */
-        .grid-kpi { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .grid-kpi { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; margin-bottom: 30px; }
         .card-kpi { 
             background: linear-gradient(to bottom right, #ffffff, #fdfbff);
             border: 1px solid rgba(106, 27, 154, 0.1);
@@ -214,6 +214,10 @@
                     <span id="totalChamados" class="kpi-valor">0</span>
                 </div>
                 <div class="card-kpi">
+                    <span class="kpi-titulo">MTBF (Confiabilidade)</span>
+                    <span id="mtbfValor" class="kpi-valor">--</span>
+                </div>
+                <div class="card-kpi">
                     <span class="kpi-titulo">SLA Mensal</span>
                     <span class="kpi-valor">98<small style="font-size: 0.5em;">%</small></span>
                 </div>
@@ -278,7 +282,19 @@
                 });
                 
                 if(document.getElementById('totalChamados')) {
-                    document.getElementById('totalChamados').innerText = dados.length;
+                    const total = dados.length;
+                    document.getElementById('totalChamados').innerText = total;
+
+                    // LÓGICA MTBF: Tempo de Operação (ex: 720h/mês) / Número de Chamados
+                    const mtbfElement = document.getElementById('mtbfValor');
+                    const tempoOperacao = 720; 
+                    
+                    if(total > 0) {
+                        const mtbfCalculado = (tempoOperacao / total).toFixed(1);
+                        mtbfElement.innerHTML = `${mtbfCalculado}<small style="font-size: 0.4em;">h</small>`;
+                    } else {
+                        mtbfElement.innerHTML = `720<small style="font-size: 0.4em;">h</small>`;
+                    }
                 }
             } catch (erro) {
                 corpo.innerHTML = '<tr><td colspan="4">Conectando ao servidor...</td></tr>';
@@ -308,6 +324,7 @@
             } finally {
                 btn.innerText = 'Enviar Solicitação';
                 btn.style.opacity = '1';
+                carregarDados(); // Atualiza os dados após enviar
             }
         };
 
