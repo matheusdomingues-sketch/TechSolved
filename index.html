@@ -141,16 +141,59 @@
         const paginas = document.querySelectorAll('.pagina');
 
         botoes.forEach(btn => {
-            btn.onclick = () => {
-                const alvo = btn.getAttribute('data-target');
+            btn.addEventListener('click', function() {
+                // Remove 'ativa' de todas as páginas
                 paginas.forEach(p => p.classList.remove('ativa'));
+                // Remove 'btn-ativo' de todos os botões
                 botoes.forEach(b => b.classList.remove('btn-ativo'));
-                document.getElementById(alvo).classList.add('ativa');
-                btn.classList.add('btn-ativo');
                 
-                if(alvo === 'VT') carregarDados();
-            };
+                const alvo = this.getAttribute('data-target');
+                const paginaAlvo = document.getElementById(alvo);
+                
+                if (paginaAlvo) {
+                    paginaAlvo.classList.add('ativa');
+                    this.classList.add('btn-ativo');
+                }
+
+                if(alvo === 'VT') {
+                    carregarDados();
+                }
+            });
         });
 
         // --- FUNÇÃO PARA CARREGAR DADOS DO BANCO ---
-        async function
+        async function carregarDados() {
+            const corpo = document.getElementById('corpoTabela');
+            if(!corpo) return;
+            
+            corpo.innerHTML = '<tr><td colspan="3">Buscando no Neon...</td></tr>';
+            
+            try {
+                const res = await fetch(API_URL);
+                const dados = await res.json();
+                
+                corpo.innerHTML = '';
+                dados.forEach(item => {
+                    corpo.innerHTML += `
+                        <tr>
+                            <td>#${item.id}</td>
+                            <td>${item.nome}</td>
+                            <td>${item.email}</td>
+                        </tr>
+                    `;
+                });
+                document.getElementById('resumoBanco').innerHTML = `<h3>Total de registros: ${dados.length}</h3>`;
+            } catch (erro) {
+                corpo.innerHTML = '<tr><td colspan="3" style="color:red">Erro ao carregar dados.</td></tr>';
+            }
+        }
+
+        // --- FUNÇÃO PARA ENVIAR DADOS (POST) ---
+        document.getElementById('formCadastro').onsubmit = async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            btn.innerText = 'Enviando...';
+            
+            const nome = document.getElementById('nome').value;
+</body>
+</html>
