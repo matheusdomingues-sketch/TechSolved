@@ -173,11 +173,21 @@
                 </div>
                 <div class="form-group">
                     <label>Sistema Afetado</label>
-                    <select required>
+                    <select id="sistema" required>
                         <option value="">Selecione o sistema...</option>
                         <option>ERP Financeiro</option>
                         <option>Portal do Cliente</option>
                         <option>App Logística</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Tipo de Manutenção</label>
+                    <select id="tipoManutencao" required>
+                        <option value="">Selecione o tipo...</option>
+                        <option value="preventiva">Preventiva (Evitar falhas futuras)</option>
+                        <option value="corretiva">Corretiva (Corrigir erro existente)</option>
+                        <option value="adaptativa">Adaptativa (Ajustar a novas necessidades)</option>
+                        <option value="perfectiva">Perfectiva (Melhorar performance/recursos)</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -310,12 +320,13 @@
             
             const nome = document.getElementById('nome').value;
             const email = document.getElementById('email').value;
+            const tipo = document.getElementById('tipoManutencao').value;
 
             try {
                 await fetch(API_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ nome, email })
+                    body: JSON.stringify({ nome, email, tipo_manutencao: tipo })
                 });
                 alert('🚀 Chamado enviado com sucesso!');
                 document.getElementById('formCadastro').reset();
