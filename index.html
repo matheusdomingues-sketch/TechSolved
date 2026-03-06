@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechSolved - Portal Realtime</title>
+    <title>TechSolved - Portal de Gestão</title>
     <style>
+        /* --- PALETA DE CORES ROXA --- */
         :root {
-            --cor-primaria: #2e7d32; 
-            --cor-secundaria: #e8f5e9;
-            --cor-fundo: #f4f7f6; 
+            --cor-primaria: #6a1b9a;    /* Roxo Principal */
+            --cor-secundaria: #f3e5f5;  /* Roxo Bem Clarinho */
+            --cor-fundo: #f8f9fa; 
             --cor-texto: #333333; 
-            --cor-alerta: #d32f2f;
+            --cor-destaque: #4a148c;   /* Roxo Escuro */
+            --cor-alerta: #ff5252;
         }
 
         body {
@@ -24,22 +26,22 @@
         header {
             background-color: #ffffff;
             border-top: 5px solid var(--cor-primaria);
-            padding: 30px 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             text-align: center;
         }
 
-        header h1 { color: var(--cor-primaria); margin: 0 0 20px 0; font-size: 2.5em; }
+        header h1 { color: var(--cor-primaria); margin: 0 0 15px 0; font-size: 2.2em; }
 
         nav ul {
             list-style: none; padding: 0; margin: 0;
-            display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;
+            display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;
         }
         
         nav a {
-            text-decoration: none; padding: 10px 25px;
+            text-decoration: none; padding: 10px 20px;
             background-color: #ffffff; color: var(--cor-primaria);
-            border: 2px solid var(--cor-primaria); border-radius: 30px; 
+            border: 2px solid var(--cor-primaria); border-radius: 8px; 
             font-weight: bold; transition: all 0.3s ease;
             cursor: pointer;
         }
@@ -47,75 +49,110 @@
         nav a:hover, nav a.btn-ativo { background-color: var(--cor-primaria); color: #ffffff; }
 
         main {
-            max-width: 900px; margin: 40px auto;
-            background-color: #ffffff; padding: 40px;
-            border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            max-width: 1000px; margin: 30px auto;
+            background-color: #ffffff; padding: 30px;
+            border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         }
 
-        .pagina { display: none; animation: fadeIn 0.5s ease; }
+        .pagina { display: none; animation: fadeIn 0.4s ease; }
         .pagina.ativa { display: block; }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(5px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; font-weight: bold; margin-bottom: 5px; }
+        /* ESTILOS FORMULÁRIO (NETIQUETA) */
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 5px; color: var(--cor-destaque); }
         .form-group input, .form-group select, .form-group textarea {
-            width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;
+            width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box;
+            font-size: 1em;
+        }
+        .dica-netiqueta {
+            background-color: #fff3e0; border-left: 5px solid #ff9800;
+            padding: 10px; font-size: 0.85em; margin-bottom: 10px; border-radius: 4px;
         }
 
         .btn-submit { 
             background-color: var(--cor-primaria); color: white; border: none; 
-            padding: 12px 25px; font-size: 1.1em; border-radius: 5px; cursor: pointer; font-weight: bold; 
+            padding: 15px 30px; font-size: 1.1em; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%;
         }
+        .btn-submit:hover { background-color: var(--cor-destaque); }
 
-        .tabela-dados { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        .tabela-dados th, .tabela-dados td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-        .tabela-dados th { background-color: var(--cor-secundaria); color: var(--cor-primaria); }
+        /* TABELA TÉCNICA */
+        .tabela-dados { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .tabela-dados th, .tabela-dados td { border: 1px solid #eee; padding: 12px; text-align: left; }
+        .tabela-dados th { background-color: var(--cor-primaria); color: white; }
+        .tabela-dados tr:nth-child(even) { background-color: var(--cor-secundaria); }
 
-        footer { text-align: center; padding: 20px; background-color: var(--cor-primaria); color: white; margin-top: 40px; }
+        /* DASHBOARD DIREÇÃO (KPIs) */
+        .grid-kpi { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .card-kpi { 
+            background: white; border: 1px solid #e1bee7; border-radius: 10px; padding: 20px; 
+            text-align: center; border-bottom: 5px solid var(--cor-primaria);
+        }
+        .kpi-valor { font-size: 2em; font-weight: bold; color: var(--cor-primaria); }
+        .kpi-titulo { font-size: 0.9em; color: #666; text-transform: uppercase; }
+
+        footer { text-align: center; padding: 20px; background-color: var(--cor-destaque); color: white; margin-top: 50px; }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>TechSolved</h1>
+        <h1>TechSolved <span style="font-size: 0.5em; vertical-align: middle; opacity: 0.7;">| Portal de Chamados</span></h1>
         <nav>
             <ul>
-                <li><a class="btn-nav btn-ativo" data-target="VU">Abertura</a></li>
-                <li><a class="btn-nav" data-target="VT">Técnico (Banco Real)</a></li>
-                <li><a class="btn-nav" data-target="VD">Direção</a></li>
+                <li><a class="btn-nav btn-ativo" data-target="VU">Utilizador (Abertura)</a></li>
+                <li><a class="btn-nav" data-target="VT">Técnico (Gestão)</a></li>
+                <li><a class="btn-nav" data-target="VD">Direção (Dashboard)</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
         <section id="VU" class="pagina ativa">
-            <h2>Novo Chamado / Cadastro</h2>
+            <h2>Abertura de Chamado</h2>
+            <div class="dica-netiqueta">
+                <strong>💡 Netiqueta:</strong> Seja específico. Evite dizer "não funciona". Informe o passo-a-passo e a mensagem de erro exata.
+            </div>
             <form id="formCadastro">
                 <div class="form-group">
-                    <label>Nome do Cliente:</label>
-                    <input type="text" id="nome" placeholder="Digite seu nome" required>
+                    <label>Seu Nome:</label>
+                    <input type="text" id="nome" placeholder="Ex: João Silva" required>
                 </div>
                 <div class="form-group">
-                    <label>E-mail para Contato:</label>
-                    <input type="email" id="email" placeholder="seu@email.com" required>
+                    <label>Seu E-mail:</label>
+                    <input type="email" id="email" placeholder="contato@empresa.com" required>
                 </div>
-                <button type="submit" class="btn-submit">Enviar para o Banco Neon</button>
+                <div class="form-group">
+                    <label>Sistema Afetado:</label>
+                    <select required>
+                        <option value="">Selecione...</option>
+                        <option>ERP Financeiro</option>
+                        <option>Portal do Cliente</option>
+                        <option>App Mobile</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Descrição Detalhada do Erro:</label>
+                    <textarea placeholder="O que aconteceu? Qual era o resultado esperado?" rows="4"></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Registrar Chamado no Banco Neon</button>
             </form>
         </section>
 
         <section id="VT" class="pagina">
-            <h2>Dados Direto do Banco de Dados</h2>
-            <p>Abaixo estão os registros reais salvos no seu PostgreSQL do Neon:</p>
+            <h2>Mesa de Trabalho do Técnico</h2>
+            <p>Gerencie os tickets ativos abaixo. Dados vindos do banco de dados em tempo real:</p>
             <table class="tabela-dados">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Nome</th>
-                        <th>E-mail</th>
+                        <th>Ticket ID</th>
+                        <th>Cliente</th>
+                        <th>Contato</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody id="corpoTabela">
@@ -124,8 +161,32 @@
         </section>
 
         <section id="VD" class="pagina">
-            <h2>Performance</h2>
-            <div id="resumoBanco">Carregando estatísticas...</div>
+            <h2>Dashboard Executivo</h2>
+            
+            <div class="grid-kpi">
+                <div class="card-kpi">
+                    <div class="kpi-titulo">Total de Chamados</div>
+                    <div id="totalChamados" class="kpi-valor">0</div>
+                </div>
+                <div class="card-kpi">
+                    <div class="kpi-titulo">Tempo Médio Resposta</div>
+                    <div class="kpi-valor">1.4h</div>
+                </div>
+                <div class="card-kpi">
+                    <div class="kpi-titulo">SLA de Resolução</div>
+                    <div class="kpi-valor">98%</div>
+                </div>
+            </div>
+
+            <div style="background: #eee; padding: 20px; border-radius: 10px; text-align: center; border: 1px dashed var(--cor-primaria);">
+                <h3>Gráfico de Performance (Simulado)</h3>
+                <p>Aqui seriam exibidos os gráficos de barras por sistema.</p>
+                <div style="display: flex; align-items: flex-end; justify-content: space-around; height: 100px;">
+                    <div style="background: var(--cor-primaria); width: 40px; height: 80%;"></div>
+                    <div style="background: var(--cor-destaque); width: 40px; height: 40%;"></div>
+                    <div style="background: var(--cor-primaria); width: 40px; height: 60%;"></div>
+                </div>
+            </div>
         </section>
     </main>
 
@@ -136,37 +197,25 @@
     <script>
         const API_URL = '/.netlify/functions/api';
 
-        // --- NAVEGAÇÃO ENTRE ABAS ---
-        const botoes = document.querySelectorAll('.btn-nav');
-        const paginas = document.querySelectorAll('.pagina');
-
-        botoes.forEach(btn => {
+        // NAVEGAÇÃO
+        document.querySelectorAll('.btn-nav').forEach(btn => {
             btn.addEventListener('click', function() {
-                // Remove 'ativa' de todas as páginas
-                paginas.forEach(p => p.classList.remove('ativa'));
-                // Remove 'btn-ativo' de todos os botões
-                botoes.forEach(b => b.classList.remove('btn-ativo'));
+                document.querySelectorAll('.pagina').forEach(p => p.classList.remove('ativa'));
+                document.querySelectorAll('.btn-nav').forEach(b => b.classList.remove('btn-ativo'));
                 
                 const alvo = this.getAttribute('data-target');
-                const paginaAlvo = document.getElementById(alvo);
+                document.getElementById(alvo).classList.add('ativa');
+                this.classList.add('btn-ativo');
                 
-                if (paginaAlvo) {
-                    paginaAlvo.classList.add('ativa');
-                    this.classList.add('btn-ativo');
-                }
-
-                if(alvo === 'VT') {
-                    carregarDados();
-                }
+                if(alvo === 'VT' || alvo === 'VD') carregarDados();
             });
         });
 
-        // --- FUNÇÃO PARA CARREGAR DADOS DO BANCO ---
+        // CARREGAR DADOS
         async function carregarDados() {
             const corpo = document.getElementById('corpoTabela');
             if(!corpo) return;
-            
-            corpo.innerHTML = '<tr><td colspan="3">Buscando no Neon...</td></tr>';
+            corpo.innerHTML = '<tr><td colspan="4">Conectando ao Neon...</td></tr>';
             
             try {
                 const res = await fetch(API_URL);
@@ -179,21 +228,45 @@
                             <td>#${item.id}</td>
                             <td>${item.nome}</td>
                             <td>${item.email}</td>
+                            <td style="color: green; font-weight: bold;">Ativo</td>
                         </tr>
                     `;
                 });
-                document.getElementById('resumoBanco').innerHTML = `<h3>Total de registros: ${dados.length}</h3>`;
+                
+                if(document.getElementById('totalChamados')) {
+                    document.getElementById('totalChamados').innerText = dados.length;
+                }
             } catch (erro) {
-                corpo.innerHTML = '<tr><td colspan="3" style="color:red">Erro ao carregar dados.</td></tr>';
+                corpo.innerHTML = '<tr><td colspan="4">Erro ao carregar dados.</td></tr>';
             }
         }
 
-        // --- FUNÇÃO PARA ENVIAR DADOS (POST) ---
+        // SALVAR DADOS
         document.getElementById('formCadastro').onsubmit = async (e) => {
             e.preventDefault();
             const btn = e.target.querySelector('button');
-            btn.innerText = 'Enviando...';
+            btn.innerText = 'Processando...';
             
             const nome = document.getElementById('nome').value;
+            const email = document.getElementById('email').value;
+
+            try {
+                await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nome, email })
+                });
+                alert('Chamado registrado com sucesso no banco de dados!');
+                document.getElementById('formCadastro').reset();
+            } catch (err) {
+                alert('Erro ao salvar no banco.');
+            } finally {
+                btn.innerText = 'Registrar Chamado no Banco Neon';
+            }
+        };
+
+        // Início
+        carregarDados();
+    </script>
 </body>
 </html>
